@@ -16,11 +16,10 @@ class Auth extends BaseController
             $builder = $db->table('users');
 
             $user = $builder->where('username', $username)
-                           ->where('password', $password)
                            ->get()
                            ->getRow();
 
-            if ($user) {
+            if ($user && password_verify($password, $user->password)) {
                 $session->set([
                     'id' => $user->id,
                     'username' => $user->username,
@@ -59,7 +58,7 @@ class Auth extends BaseController
                     $data = [
                         'email' => $email,
                         'username' => $username,
-                        'password' => $password,
+                        'password' => password_hash($password, PASSWORD_DEFAULT),
                         'userlevel' => 'user',
                         'status' => 'active',
                         'image' => ''

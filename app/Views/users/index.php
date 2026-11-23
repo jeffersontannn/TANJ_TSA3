@@ -506,7 +506,11 @@
     </div>
     <div class="nav">
         <a href="<?= base_url('/') ?>">Home</a>
-        <a href="<?= base_url('auth/login') ?>">Login</a>
+        <?php if (session()->get('username')): ?>
+            <a href="<?= base_url('auth/logout') ?>">Logout</a>
+        <?php else: ?>
+            <a href="<?= base_url('auth/login') ?>">Login</a>
+        <?php endif; ?>
     </div>
 </div>
 
